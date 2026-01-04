@@ -36,7 +36,7 @@ export default function AboutPage() {
             </h2>
 
             <p className="text-lg text-muted-foreground leading-relaxed">
-              At ScentHaven, we believe that fragrance is more than just a scent—it&apos;s an expression
+              At De-Hac, we believe that fragrance is more than just a scent—it&apos;s an expression
               of identity, a memory captured in a bottle, and an art form perfected over generations.
             </p>
 

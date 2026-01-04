@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const VideoHero = () => {
@@ -72,7 +72,7 @@ export const VideoHero = () => {
               transition={{ duration: 1, delay: 1.1 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Link to="/shop">
+              <Link href="/shop">
                 <Button 
                   size="lg" 
                   className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium tracking-wide"
@@ -80,7 +80,7 @@ export const VideoHero = () => {
                   Shop All Gifts
                 </Button>
               </Link>
-              <Link to="/shop">
+              <Link href="/shop">
                 <Button 
                   size="lg" 
                   variant="outline"

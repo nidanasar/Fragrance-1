@@ -214,7 +214,7 @@ export const ProductDetailContent = ({ product }: ProductDetailContentProps) => 
             <Button
               size="lg"
               onClick={() => addToCart(product, selectedSize)}
-              disabled={!product.inStock || (selectedVariant && selectedVariant.stock === 0)}
+              disabled={!product.inStock || !!(selectedVariant && selectedVariant.stock === 0)}
               className="w-full bg-primary hover:bg-primary/90 text-lg py-6"
             >
               <ShoppingCart className="mr-2 h-5 w-5" />

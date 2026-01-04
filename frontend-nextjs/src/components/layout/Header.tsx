@@ -41,7 +41,7 @@ export const Header = () => {
               <div className="w-4 h-6 bg-primary rounded-sm" />
             </div>
             <span className="text-xl md:text-2xl font-display font-bold text-primary">
-              ScentHaven
+              De-Hac
             </span>
           </Link>
 

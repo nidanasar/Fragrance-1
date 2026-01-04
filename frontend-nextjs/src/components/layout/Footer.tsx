@@ -14,7 +14,7 @@ export const Footer = () => {
               <div className="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
                 <div className="w-4 h-6 bg-background rounded-sm" />
               </div>
-              <span className="text-xl font-display font-bold">ScentHaven</span>
+              <span className="text-xl font-display font-bold">De-Hac</span>
             </div>
             <p className="text-sm text-primary-foreground/80">
               Curated luxury fragrances from global artisans. Discover your signature scent.
@@ -107,7 +107,7 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-foreground/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/80">
-          <p>&copy; 2024 ScentHaven. All rights reserved.</p>
+          <p>&copy; 2026 De-Hac. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/about" className="hover:text-gold transition-smooth">
               Privacy Policy
