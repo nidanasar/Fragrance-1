@@ -30,9 +30,9 @@ export default function CartPage() {
     );
   }
 
-  // Free shipping threshold in AED
-  const freeShippingThreshold = 200;
-  const shippingCost = cartTotal >= freeShippingThreshold ? 0 : 25;
+
+  // Free shipping threshold in PKR
+  const freeShippingThreshold = 20000; // Threshold for free shipping in PKR
 
   return (
     <div className="min-h-screen py-8">
@@ -70,17 +70,15 @@ export default function CartPage() {
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-medium">AED {cartTotal.toFixed(2)}</span>
+                  <span className="font-medium">PKR {cartTotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
-                  <span className="font-medium text-gold">
-                    {shippingCost === 0 ? "FREE" : `AED ${shippingCost.toFixed(2)}`}
-                  </span>
+                  <span className="font-medium text-gold">Calculated at checkout</span>
                 </div>
                 <div className="border-t pt-3 flex justify-between text-lg font-bold">
-                  <span>Total</span>
-                  <span>AED {(cartTotal + shippingCost).toFixed(2)}</span>
+                  <span>Estimated Total</span>
+                  <span>PKR {cartTotal.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -88,9 +86,9 @@ export default function CartPage() {
                 Proceed to Checkout
               </Button>
 
-              {cartTotal < freeShippingThreshold && (
+              {cartTotal > 0 && cartTotal < freeShippingThreshold && (
                 <p className="text-sm text-center text-muted-foreground">
-                  Add AED {(freeShippingThreshold - cartTotal).toFixed(2)} more for free shipping
+                  Add PKR {(freeShippingThreshold - cartTotal).toFixed(2)} more for free shipping
                 </p>
               )}
             </div>
@@ -142,7 +140,7 @@ const CartItemCard = ({ item, index, onRemove, onUpdateQuantity }: CartItemCardP
           <p className="text-sm text-muted-foreground mb-1">
             Size: {item.selectedSize}
           </p>
-          <p className="text-lg font-bold">AED {item.price}</p>
+          <p className="text-lg font-bold">PKR {item.price}</p>
         </div>
 
         {/* Actions */}

@@ -39,7 +39,7 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
       className="group bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-luxury transition-all duration-300"
     >
       <Link href={`/product/${product.slug}`}>
-        <div className="relative aspect-square overflow-hidden bg-muted">
+        <div className="relative aspect-[2/3] overflow-hidden bg-white">
           <img
             src={imageUrl}
             alt={product.image?.alt || product.name}
@@ -91,11 +91,11 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-xl font-bold text-primary">
-              AED {product.price}
+              PKR {product.price}
             </span>
             {product.compareAtPrice && product.compareAtPrice > product.price && (
               <span className="text-sm text-muted-foreground line-through">
-                AED {product.compareAtPrice}
+                PKR {product.compareAtPrice}
               </span>
             )}
           </div>

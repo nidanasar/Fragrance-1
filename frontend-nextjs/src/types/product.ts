@@ -75,6 +75,12 @@ export interface Product {
   fragranceNotes?: FragranceNotes;
   specifications?: Specification[];
   ingredients?: string;
+  howToUse?: string;
+  careInstructions?: string;
+  averageRating?: number;
+  numberOfReviews?: number;
+  shippingInfo?: string;
+  returnPolicy?: string;
   isFeatured?: boolean;
   isNewArrival?: boolean;
   seo?: ProductSEO;

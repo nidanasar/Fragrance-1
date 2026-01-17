@@ -26,9 +26,9 @@ export const ALL_PRODUCTS_QUERY = `
       },
       alt
     },
-    "price": variants[isDefault == true][0].price,
-    "compareAtPrice": variants[isDefault == true][0].compareAtPrice,
-    "defaultVariant": variants[isDefault == true][0] {
+    "price": coalesce(variants[isDefault == true][0].price, variants[0].price),
+    "compareAtPrice": coalesce(variants[isDefault == true][0].compareAtPrice, variants[0].compareAtPrice),
+    "defaultVariant": coalesce(variants[isDefault == true][0], variants[0]) {
       size,
       sku,
       price,
@@ -58,7 +58,9 @@ export const ALL_PRODUCTS_QUERY = `
       top,
       middle,
       base
-    }
+    },
+    averageRating,
+    numberOfReviews
   }
 `;
 
@@ -90,8 +92,8 @@ export const PRODUCT_BY_SLUG_QUERY = `
       stock,
       isDefault
     },
-    "price": variants[isDefault == true][0].price,
-    "compareAtPrice": variants[isDefault == true][0].compareAtPrice,
+    "price": coalesce(variants[isDefault == true][0].price, variants[0].price),
+    "compareAtPrice": coalesce(variants[isDefault == true][0].compareAtPrice, variants[0].compareAtPrice),
     "inStock": math::sum(variants[].stock) > 0,
     trackInventory,
     "categories": categories[]-> {
@@ -111,6 +113,12 @@ export const PRODUCT_BY_SLUG_QUERY = `
       value
     },
     ingredients,
+    howToUse,
+    careInstructions,
+    averageRating,
+    numberOfReviews,
+    shippingInfo,
+    returnPolicy,
     isFeatured,
     isNewArrival,
     seo {
@@ -150,8 +158,8 @@ export const PRODUCT_BY_ID_QUERY = `
       stock,
       isDefault
     },
-    "price": variants[isDefault == true][0].price,
-    "compareAtPrice": variants[isDefault == true][0].compareAtPrice,
+    "price": coalesce(variants[isDefault == true][0].price, variants[0].price),
+    "compareAtPrice": coalesce(variants[isDefault == true][0].compareAtPrice, variants[0].compareAtPrice),
     "inStock": math::sum(variants[].stock) > 0,
     "categories": categories[]-> {
       _id,
@@ -164,7 +172,11 @@ export const PRODUCT_BY_ID_QUERY = `
       top,
       middle,
       base
-    }
+    },
+    averageRating,
+    numberOfReviews,
+    shippingInfo,
+    returnPolicy
   }
 `;
 
@@ -194,8 +206,8 @@ export const FEATURED_PRODUCTS_QUERY = `
       },
       alt
     },
-    "price": variants[isDefault == true][0].price,
-    "compareAtPrice": variants[isDefault == true][0].compareAtPrice,
+    "price": coalesce(variants[isDefault == true][0].price, variants[0].price),
+    "compareAtPrice": coalesce(variants[isDefault == true][0].compareAtPrice, variants[0].compareAtPrice),
     variants[] {
       size,
       sku,
@@ -239,8 +251,8 @@ export const PRODUCTS_BY_CATEGORY_QUERY = `
       },
       alt
     },
-    "price": variants[isDefault == true][0].price,
-    "compareAtPrice": variants[isDefault == true][0].compareAtPrice,
+    "price": coalesce(variants[isDefault == true][0].price, variants[0].price),
+    "compareAtPrice": coalesce(variants[isDefault == true][0].compareAtPrice, variants[0].compareAtPrice),
     "totalStock": math::sum(variants[].stock),
     "inStock": math::sum(variants[].stock) > 0,
     tags,
@@ -275,7 +287,7 @@ export const SEARCH_PRODUCTS_QUERY = `
       },
       alt
     },
-    "price": variants[isDefault == true][0].price,
+    "price": coalesce(variants[isDefault == true][0].price, variants[0].price),
     "totalStock": math::sum(variants[].stock),
     "inStock": math::sum(variants[].stock) > 0,
     tags,
@@ -323,7 +335,7 @@ export const RELATED_PRODUCTS_QUERY = `
       },
       alt
     },
-    "price": variants[isDefault == true][0].price,
+    "price": coalesce(variants[isDefault == true][0].price, variants[0].price),
     "inStock": math::sum(variants[].stock) > 0,
     "category": categories[0]->slug.current
   }

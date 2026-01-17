@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,27 +20,42 @@ interface ShopContentProps {
 }
 
 export const ShopContent = ({ initialProducts }: ShopContentProps) => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category") || "all";
-  const [selectedCategory, setSelectedCategory] = useState(categoryParam);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const searchParam = searchParams.get("search") || "";
 
-  // Calculate max price from products
-  const maxPrice = useMemo(() => {
-    if (initialProducts.length === 0) return 500;
-    return Math.max(...initialProducts.map((p) => p.price), 500);
+  // Calculate min and max price from products
+  const minPrice = useMemo(() => {
+    if (initialProducts.length === 0) return 1500;
+    return Math.min(...initialProducts.map((p) => p.price), 1500);
   }, [initialProducts]);
 
-  // Filter products based on category and price
+  const maxPrice = useMemo(() => {
+    if (initialProducts.length === 0) return 5000;
+    return Math.max(...initialProducts.map((p) => p.price), 5000);
+  }, [initialProducts]);
+
+  const [selectedCategory, setSelectedCategory] = useState(categoryParam);
+  const [priceRange, setPriceRange] = useState<[number, number]>([minPrice, maxPrice]);
+
+  // Filter products based on category, price, and search
   const filteredProducts = useMemo(() => {
     return initialProducts.filter((product) => {
       const categoryMatch =
         selectedCategory === "all" || product.category === selectedCategory;
       const priceMatch =
         product.price >= priceRange[0] && product.price <= priceRange[1];
-      return categoryMatch && priceMatch;
+      
+      const searchMatch = searchParam
+        ? product.name.toLowerCase().includes(searchParam.toLowerCase()) ||
+          product.shortDescription?.toLowerCase().includes(searchParam.toLowerCase()) ||
+          (typeof product.description === 'string' ? product.description.toLowerCase().includes(searchParam.toLowerCase()) : false)
+        : true;
+
+      return categoryMatch && priceMatch && searchMatch;
     });
-  }, [initialProducts, selectedCategory, priceRange]);
+  }, [initialProducts, selectedCategory, priceRange, searchParam]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">
@@ -50,14 +65,15 @@ export const ShopContent = ({ initialProducts }: ShopContentProps) => {
           {/* Filter Header */}
           <div className="bg-muted/30 px-6 py-4 border-b border-border flex items-center justify-between">
             <h2 className="font-display font-semibold text-lg">Filters</h2>
-            {(selectedCategory !== "all" || priceRange[0] !== 0 || priceRange[1] !== maxPrice) && (
+            {(selectedCategory !== "all" || priceRange[0] !== minPrice || priceRange[1] !== maxPrice || searchParam) && (
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-8 text-xs text-muted-foreground hover:text-foreground"
                 onClick={() => {
                   setSelectedCategory("all");
-                  setPriceRange([0, maxPrice]);
+                  setPriceRange([minPrice, maxPrice]);
+                  router.push("/shop");
                 }}
               >
                 <X className="h-3 w-3 mr-1" />
@@ -107,18 +123,19 @@ export const ShopContent = ({ initialProducts }: ShopContentProps) => {
                 <div className="space-y-6">
                   <div className="px-2">
                     <Slider
-                      value={[priceRange[1]]}
-                      onValueChange={(value) => setPriceRange([0, value[0]])}
+                      value={priceRange}
+                      onValueChange={(value) => setPriceRange(value as [number, number])}
+                      min={minPrice}
                       max={maxPrice}
                       step={10}
                       className="w-full"
                     />
                     <div className="flex justify-between mt-3 text-sm text-muted-foreground">
-                      <span>AED 0</span>
+                      <span>PKR {minPrice}</span>
                       <span className="font-medium text-foreground">
-                        Up to AED {priceRange[1]}
+                        PKR {priceRange[0]} - PKR {priceRange[1]}
                       </span>
-                      <span>AED {maxPrice}+</span>
+                      <span>PKR {maxPrice}</span>
                     </div>
                   </div>
 
@@ -126,10 +143,10 @@ export const ShopContent = ({ initialProducts }: ShopContentProps) => {
                     <p className="text-xs text-muted-foreground mb-3">Quick Select</p>
                     <div className="grid grid-cols-2 gap-2">
                       {[
-                        { range: [0, maxPrice] as [number, number], label: "All" },
-                        { range: [0, 100] as [number, number], label: "Under AED 100" },
-                        { range: [100, 200] as [number, number], label: "AED 100 - 200" },
-                        { range: [200, maxPrice] as [number, number], label: "AED 200+" },
+                        { range: [minPrice, maxPrice] as [number, number], label: "All" },
+                        { range: [minPrice, 2500] as [number, number], label: "PKR 1500 - 2500" },
+                        { range: [2500, 3500] as [number, number], label: "PKR 2500 - 3500" },
+                        { range: [3500, maxPrice] as [number, number], label: "PKR 3500+" },
                       ].map((option) => (
                         <button
                           key={option.label}
@@ -154,10 +171,17 @@ export const ShopContent = ({ initialProducts }: ShopContentProps) => {
 
       {/* Products Grid */}
       <div className="flex-1">
-        <div className="mb-4 flex justify-between items-center">
-          <p className="text-muted-foreground">
-            {filteredProducts.length} products found
-          </p>
+        <div className="mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <div className="flex flex-col">
+            <p className="text-muted-foreground">
+              {filteredProducts.length} products found
+            </p>
+            {searchParam && (
+              <p className="text-sm text-gold mt-1">
+                Searching for: <span className="font-semibold">"{searchParam}"</span>
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

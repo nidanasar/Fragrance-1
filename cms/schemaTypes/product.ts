@@ -59,59 +59,72 @@ export default defineType({
       ],
       validation: (Rule) => Rule.min(1),
     }),
-    defineField({
-      name: 'variants',
-      title: 'Variants',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'size',
-              title: 'Size',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'sku',
-              title: 'SKU',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'price',
-              title: 'Price',
-              type: 'number',
-              validation: (Rule) => Rule.required().min(0),
-            }),
-            defineField({
-              name: 'compareAtPrice',
-              title: 'Compare At Price',
-              type: 'number',
-            }),
-            defineField({
-              name: 'stock',
-              title: 'Stock',
-              type: 'number',
-              validation: (Rule) => Rule.required().min(0),
-            }),
-            defineField({
-              name: 'isDefault',
-              title: 'Is Default',
-              type: 'boolean',
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'size',
-              media: 'image',
-            },
+   defineField({
+  name: 'variants',
+  title: 'Variants',
+  type: 'array',
+  of: [
+    {
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'size',
+          title: 'Size',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'sku',
+          title: 'SKU',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'price',
+          title: 'Price',
+          type: 'number',
+          validation: (Rule) => Rule.required().min(0),
+        }),
+        defineField({
+          name: 'currency',
+          title: 'Currency',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'PKR', value: 'PKR' },
+            ],
+            layout: 'dropdown',
           },
-        }
+          initialValue: 'PKR',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'compareAtPrice',
+          title: 'Compare At Price',
+          type: 'number',
+        }),
+        defineField({
+          name: 'stock',
+          title: 'Stock',
+          type: 'number',
+          validation: (Rule) => Rule.required().min(0),
+        }),
+        defineField({
+          name: 'isDefault',
+          title: 'Is Default',
+          type: 'boolean',
+        }),
       ],
-      validation: (Rule) => Rule.required().min(1),
-    }),
+      preview: {
+        select: {
+          title: 'size',
+          media: 'image',
+        },
+      },
+    }
+  ],
+  validation: (Rule) => Rule.required().min(1),
+}),
     defineField({
       name: 'categories',
       title: 'Categories',
@@ -210,6 +223,44 @@ export default defineType({
       title: 'Track Inventory',
       type: 'boolean',
       initialValue: true,
+    }),
+    defineField({
+      name: 'averageRating',
+      title: 'Average Rating',
+      type: 'number',
+      description: 'Average customer rating (out of 5)',
+      validation: (Rule) => Rule.min(0).max(5),
+    }),
+    defineField({
+      name: 'numberOfReviews',
+      title: 'Number of Reviews',
+      type: 'number',
+      description: 'Total number of customer reviews',
+      validation: (Rule) => Rule.min(0),
+    }),
+    defineField({
+      name: 'shippingInfo',
+      title: 'Shipping Information',
+      type: 'string',
+      description: 'Custom shipping information for this product',
+    }),
+    defineField({
+      name: 'returnPolicy',
+      title: 'Return Policy',
+      type: 'string',
+      description: 'Custom return policy for this product',
+    }),
+    defineField({
+      name: 'howToUse',
+      title: 'How To Use',
+      type: 'text',
+      description: 'Instructions on how to use the product',
+    }),
+    defineField({
+      name: 'careInstructions',
+      title: 'Care Instructions',
+      type: 'text',
+      description: 'Instructions on how to care for the product',
     }),
     defineField({
       name: 'seo',
