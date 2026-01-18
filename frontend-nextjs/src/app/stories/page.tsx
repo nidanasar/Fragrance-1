@@ -6,6 +6,7 @@ import Link from "next/link";
 const stories = [
   {
     id: 1,
+    slug: "master-perfumer-journey",
     title: "The Master Perfumer's Journey",
     excerpt: "Follow Jean-Claude's 40-year odyssey through the world's most exotic botanical gardens.",
     image: "/assets/story-artisan.jpg",
@@ -14,6 +15,7 @@ const stories = [
   },
   {
     id: 2,
+    slug: "spices-silk-road",
     title: "Spices of the Silk Road",
     excerpt: "How ancient trade routes continue to inspire our most daring oriental compositions.",
     image: "/assets/story-spice.jpg",
@@ -22,6 +24,7 @@ const stories = [
   },
   {
     id: 3,
+    slug: "capturing-mediterranean",
     title: "Capturing the Mediterranean",
     excerpt: "The art of distilling sun-drenched coastal memories into liquid poetry.",
     image: "/assets/story-ocean.jpg",
@@ -30,6 +33,7 @@ const stories = [
   },
   {
     id: 4,
+    slug: "secret-garden-collection",
     title: "The Secret Garden Collection",
     excerpt: "Unveiling our latest floral masterpieces, born from rare English rose varieties.",
     image: "/assets/story-garden.jpg",
@@ -68,32 +72,31 @@ export default function StoriesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group cursor-pointer"
+                className="group"
               >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4">
-                  <img
-                    src={story.image}
-                    alt={story.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
-                  <span className="absolute top-4 left-4 bg-gold text-primary px-3 py-1 text-xs font-medium rounded">
-                    {story.category}
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  <span className="text-sm text-muted-foreground">{story.date}</span>
-                  <h2 className="text-2xl font-display font-bold group-hover:text-gold transition-colors">
-                    {story.title}
-                  </h2>
-                  <p className="text-muted-foreground leading-relaxed">{story.excerpt}</p>
-                  <Link
-                    href="#"
-                    className="inline-block text-gold font-medium hover:underline pt-2"
-                  >
-                    Read More &rarr;
-                  </Link>
-                </div>
+                <Link href={`/stories/${story.slug}`} className="block">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4">
+                    <img
+                      src={story.image}
+                      alt={story.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+                    <span className="absolute top-4 left-4 bg-gold text-primary px-3 py-1 text-xs font-medium rounded">
+                      {story.category}
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    <span className="text-sm text-muted-foreground">{story.date}</span>
+                    <h2 className="text-2xl font-display font-bold group-hover:text-gold transition-colors">
+                      {story.title}
+                    </h2>
+                    <p className="text-muted-foreground leading-relaxed">{story.excerpt}</p>
+                    <span className="inline-block text-black font-medium group-hover:underline pt-2">
+                      Read More &rarr;
+                    </span>
+                  </div>
+                </Link>
               </motion.article>
             ))}
           </div>
