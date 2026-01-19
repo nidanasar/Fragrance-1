@@ -109,10 +109,8 @@ export default function HomePage() {
 
       <VideoSection />
       <BrandStatement />
-      <PerfumeStories />
-
-      {/* Categories */}
       <HomeCategories />
+      <PerfumeStories />
 
       <CustomerReviews />
     </div>

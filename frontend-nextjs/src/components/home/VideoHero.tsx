@@ -15,7 +15,7 @@ export const VideoHero = () => {
           className="w-full h-full object-cover"
         >
           <source
-            src="https://cdn.pixabay.com/video/2024/03/09/203514-921554055_large.mp4"
+            src="/video/video-1.mp4"
             type="video/mp4"
           />
         </video>

@@ -10,7 +10,7 @@ import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ScentHaven - Luxury Fragrances",
+  title: "DE-HAC - Luxury Fragrances",
   description: "Curated luxury fragrances from global artisans. Experience the art of perfumery with our handpicked collection.",
   keywords: ["perfume", "fragrance", "luxury", "scent", "cologne", "eau de parfum"],
 };
